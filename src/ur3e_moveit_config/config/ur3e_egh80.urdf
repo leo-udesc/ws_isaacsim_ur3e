@@ -47,6 +47,12 @@
   <!-- In CAD this distance is 0.930, but in the spec it is 0.09465 -->
   <!--<xacro:property name="wrist_3_length" value="0.0823" />-->
   <!-- manually measured -->
+    <link name="world"/>
+  <joint name="world_joint" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+  </joint>
   <link name="base_link">
     <visual>
       <geometry>
@@ -267,12 +273,6 @@
     <origin rpy="-1.5707963267948966 0 0" xyz="0 0.0921 0"/>
     <parent link="wrist_3_link"/>
     <child link="tool0"/>
-  </joint>
-  <link name="world"/>
-  <joint name="world_joint" type="fixed">
-    <parent link="world"/>
-    <child link="base_link"/>
-    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
   </joint>
   <!-- Schunk EGH80 Coupler -->
   <!--  -->
