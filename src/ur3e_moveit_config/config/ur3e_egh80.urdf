@@ -47,12 +47,7 @@
   <!-- In CAD this distance is 0.930, but in the spec it is 0.09465 -->
   <!--<xacro:property name="wrist_3_length" value="0.0823" />-->
   <!-- manually measured -->
-    <link name="world"/>
-  <joint name="world_joint" type="fixed">
-    <parent link="world"/>
-    <child link="base_link"/>
-    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-  </joint>
+  <!--base_link-->
   <link name="base_link">
     <visual>
       <geometry>
@@ -78,7 +73,7 @@
     <child link="shoulder_link"/>
     <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.152"/>
     <axis xyz="0 0 1"/>
-    <limit effort="56.0" lower="-3.141592653589793" upper="3.141592653589793" velocity="1.57079"/>
+    <limit effort="56.0" lower="-3.141592653589793" upper="3.141592653589793" velocity="3.15"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
   <link name="shoulder_link">
@@ -96,9 +91,9 @@
       </geometry>
     </collision>
     <inertial>
-      <mass value="1.98"/>
+      <mass value="3.7"/>
       <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
-      <inertia ixx="0.006893010842794559" ixy="0.0" ixz="0.0" iyy="0.006893010842794559" iyz="0.0" izz="0.00556875"/>
+      <inertia ixx="0.010267495893" ixy="0.0" ixz="0.0" iyy="0.010267495893" iyz="0.0" izz="0.00666"/>
     </inertial>
   </link>
   <joint name="shoulder_lift_joint" type="revolute">
@@ -243,11 +238,13 @@
       <inertia ixx="0.00031341320796800004" ixy="0.0" ixz="0.0" iyy="0.00031341320796800004" iyz="0.0" izz="0.00041216"/>
     </inertial>
   </link>
+  <!--EndEffector Joint-->
   <joint name="ee_fixed_joint" type="fixed">
     <parent link="wrist_3_link"/>
     <child link="ee_link"/>
     <origin rpy="0.0 0.0 1.5707963267948966" xyz="0.0 0.0921 0.0"/>
   </joint>
+  <!--EndEffector Link-->
   <link name="ee_link">
     <collision>
       <geometry>
@@ -260,9 +257,7 @@
   <link name="base"/>
   <joint name="base_link-base_fixed_joint" type="fixed">
     <!-- NOTE: this rotation is only needed as long as base_link itself is
-                 not corrected wrt the real robot (ie: rotated over 180
-                 degrees)
-      -->
+                 not corrected wrt the real robot (ie: rotated over 180  degrees)-->
     <origin rpy="0 0 -3.141592653589793" xyz="0 0 0"/>
     <parent link="base_link"/>
     <child link="base"/>
@@ -273,6 +268,12 @@
     <origin rpy="-1.5707963267948966 0 0" xyz="0 0.0921 0"/>
     <parent link="wrist_3_link"/>
     <child link="tool0"/>
+  </joint>
+  <link name="world"/>
+  <joint name="world_joint" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
   </joint>
   <!-- Schunk EGH80 Coupler -->
   <!--  -->
@@ -326,7 +327,7 @@
       </geometry>
     </collision>
     <visual>
-      <origin rpy="2.9837243786801082024e-16 -0 0" xyz="0.0 0.001000000000000025608 -3.8353651851674719353e-17"/>
+      <origin rpy="0.0 -0 0" xyz="0.0 0.001000000000000025608 -0"/>
       <geometry>
         <mesh filename="package://robot_description/meshes/schunk_egh80/visual/egh_80.dae"/>
       </geometry>
@@ -335,7 +336,7 @@
       </material>
     </visual>
     <collision>
-      <origin rpy="2.9837243786801082024e-16 -0 0" xyz="0.0 0.001000000000000025608 -3.8353651851674719353e-17"/>
+      <origin rpy="0.0 -0 0.0" xyz="0.0 0.001000000000000025608 -0"/>
       <geometry>
         <mesh filename="package://robot_description/meshes/schunk_egh80/collision/egh_80.stl"/>
       </geometry>
@@ -355,13 +356,13 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="3.141592653589793116 5.6106676794315656464e-47 -3.141592653589793116" xyz="0.0023249999999999781258 0.08007769391666488823 0.031950000000000013112"/>
+      <origin rpy="3.141592653589793116 0 -3.141592653589793116" xyz="0.0023249999999999781258 0.08007769391666488823 0.031950000000000013112"/>
       <geometry>
         <mesh filename="package://robot_description/meshes/schunk_egh80/collision/almofada.stl"/>
       </geometry>
     </collision>
     <visual>
-      <origin rpy="-9.244463733061490901e-33 1.570796326794896558 0" xyz="0.0018250000000000375297 0.033299999999999774225 0.040700000000000007006"/>
+      <origin rpy="-0 1.570796326794896558 0" xyz="0.0018250000000000375297 0.033299999999999774225 0.040700000000000007006"/>
       <geometry>
         <mesh filename="package://robot_description/meshes/schunk_egh80/visual/falanginha.dae"/>
       </geometry>
@@ -370,13 +371,13 @@
       </material>
     </visual>
     <collision>
-      <origin rpy="-9.244463733061490901e-33 1.570796326794896558 0" xyz="0.0018250000000000375297 0.033299999999999774225 0.040700000000000007006"/>
+      <origin rpy="-0 1.570796326794896558 0" xyz="0.0018250000000000375297 0.033299999999999774225 0.040700000000000007006"/>
       <geometry>
         <mesh filename="package://robot_description/meshes/schunk_egh80/collision/falanginha.stl"/>
       </geometry>
     </collision>
     <visual>
-      <origin rpy="-9.244463733061490901e-33 1.570796326794896336 0" xyz="0.0026249999999999433509 0.033299999999999801981 0.040700000000000007006"/>
+      <origin rpy="-0 1.570796326794896336 0" xyz="0.0026249999999999433509 0.033299999999999801981 0.040700000000000007006"/>
       <geometry>
         <mesh filename="package://robot_description/meshes/schunk_egh80/visual/falange.dae"/>
       </geometry>
@@ -385,13 +386,13 @@
       </material>
     </visual>
     <collision>
-      <origin rpy="-9.244463733061490901e-33 1.570796326794896336 0" xyz="0.0026249999999999433509 0.033299999999999801981 0.040700000000000007006"/>
+      <origin rpy="-0 1.570796326794896336 0" xyz="0.0026249999999999433509 0.033299999999999801981 0.040700000000000007006"/>
       <geometry>
         <mesh filename="package://robot_description/meshes/schunk_egh80/collision/falange.stl"/>
       </geometry>
     </collision>
     <visual>
-      <origin rpy="-9.244463733061490901e-33 1.570796326794896558 0" xyz="0.0023249999999999772585 0.065299999999999774891 0.040700000000000007006"/>
+      <origin rpy="-0 1.570796326794896558 0" xyz="0.0023249999999999772585 0.065299999999999774891 0.040700000000000007006"/>
       <geometry>
         <mesh filename="package://robot_description/meshes/schunk_egh80/visual/falangeta.dae"/>
       </geometry>
@@ -400,13 +401,13 @@
       </material>
     </visual>
     <collision>
-      <origin rpy="-9.244463733061490901e-33 1.570796326794896558 0" xyz="0.0023249999999999772585 0.065299999999999774891 0.040700000000000007006"/>
+      <origin rpy="-0 1.570796326794896558 0" xyz="0.0023249999999999772585 0.065299999999999774891 0.040700000000000007006"/>
       <geometry>
         <mesh filename="package://robot_description/meshes/schunk_egh80/collision/falangeta.stl"/>
       </geometry>
     </collision>
     <visual>
-      <origin rpy="-9.244463733061490901e-33 1.570796326794896558 0" xyz="0.0026250000000000014641 0.016000000000000014211 0.041500000000000009104"/>
+      <origin rpy="-0 1.570796326794896558 0" xyz="0.0026250000000000014641 0.016000000000000014211 0.041500000000000009104"/>
       <geometry>
         <mesh filename="package://robot_description/meshes/schunk_egh80/visual/guia_dedo.dae"/>
       </geometry>
@@ -415,7 +416,7 @@
       </material>
     </visual>
     <collision>
-      <origin rpy="-9.244463733061490901e-33 1.570796326794896558 0" xyz="0.0026250000000000014641 0.016000000000000014211 0.041500000000000009104"/>
+      <origin rpy="-0 1.570796326794896558 0" xyz="0.0026250000000000014641 0.016000000000000014211 0.041500000000000009104"/>
       <geometry>
         <mesh filename="package://robot_description/meshes/schunk_egh80/collision/guia_dedo.stl"/>
       </geometry>
