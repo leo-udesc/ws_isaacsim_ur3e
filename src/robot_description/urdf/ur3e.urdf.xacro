@@ -102,7 +102,8 @@
 
 
   <xacro:macro name="ur3e_robot" params="prefix joint_limited">
-
+    
+    <!--base_link-->
     <link name="${prefix}base_link" >
       <visual>
         <geometry>
@@ -123,38 +124,41 @@
     </link>
 
     <joint name="${prefix}shoulder_pan_joint" type="revolute">
-      <parent link="${prefix}base_link" />
+      <parent link="${prefix}base_link" /> 
       <child link = "${prefix}shoulder_link" />
       <origin xyz="0.0 0.0 ${shoulder_height}" rpy="0.0 0.0 0.0" />
       <axis xyz="0 0 1" />
       <xacro:unless value="${joint_limited}">
-        <limit lower="${-2.0 * pi}" upper="${2.0 * pi}" effort="56.0" velocity="${pi / 2.0}"/>
+        <limit lower="${-2.0 * pi}" upper="${2.0 * pi}" effort="150.0" velocity="3.15"/>
       </xacro:unless>
       <xacro:if value="${joint_limited}">
-        <limit lower="${-pi}" upper="${pi}" effort="56.0" velocity="1.57079"/>
+        <limit lower="${-pi}" upper="${pi}" effort="56.0" velocity="3.15"/>
       </xacro:if>
       <dynamics damping="0.0" friction="0.0"/>
     </joint>
+
 
     <link name="${prefix}shoulder_link">
       <visual>
         <geometry>
           <mesh filename="package://robot_description/meshes/ur3e/visual/shoulder.dae"/>
         </geometry>
-        <material name="LightGrey">
+        <material name="LightGrey"> 
           <color rgba="0.7 0.7 0.7 1.0"/>
         </material>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://robot_description/meshes/ur3e/collision/shoulder.stl" />
+          <mesh filename="package://robot_description/meshes/ur3e/collision/shoulder.stl"/>
         </geometry>
       </collision>
-      <xacro:cylinder_inertial radius="0.075" length="0.1578" mass="${shoulder_mass}">
-        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
-      </xacro:cylinder_inertial>
+      <inertial>
+        <mass value="3.7"/>
+        <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+        <inertia ixx="0.010267495893" ixy="0.0" ixz="0.0" iyy="0.010267495893" iyz="0.0" izz="0.00666"/>
+      </inertial>
     </link>
-      
+
     <joint name="${prefix}shoulder_lift_joint" type="revolute">
       <parent link="${prefix}shoulder_link" />
       <child link = "${prefix}upper_arm_link" />
@@ -321,14 +325,13 @@
         <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
       </xacro:cylinder_inertial>
     </link>
-
-
+    <!--EndEffector Joint-->
     <joint name="${prefix}ee_fixed_joint" type="fixed">
       <parent link="${prefix}wrist_3_link" />
       <child link = "${prefix}ee_link" />
       <origin xyz="0.0 ${wrist_3_length} 0.0" rpy="0.0 0.0 ${pi/2.0}" />
     </joint>
-
+    <!--EndEffector Link-->
     <link name="${prefix}ee_link">
       <collision>
         <geometry>
@@ -337,19 +340,15 @@
         <origin rpy="0 0 0" xyz="-0.01 0 0"/>
       </collision>
     </link>
-
     <!-- ROS base_link to UR 'Base' Coordinates transform -->
     <link name="${prefix}base"/>
     <joint name="${prefix}base_link-base_fixed_joint" type="fixed">
       <!-- NOTE: this rotation is only needed as long as base_link itself is
-                 not corrected wrt the real robot (ie: rotated over 180
-                 degrees)
-      -->
+                 not corrected wrt the real robot (ie: rotated over 180  degrees)-->
       <origin xyz="0 0 0" rpy="0 0 ${-pi}"/>
       <parent link="${prefix}base_link"/>
       <child link="${prefix}base"/>
-    </joint>
-
+    </joint>      
     <!-- Frame coincident with all-zeros TCP on UR controller -->
     <link name="${prefix}tool0"/>
     <joint name="${prefix}wrist_3_link-tool0_fixed_joint" type="fixed">
