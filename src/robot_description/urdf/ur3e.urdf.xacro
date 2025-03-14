@@ -102,7 +102,6 @@
 
 
   <xacro:macro name="ur3e_robot" params="prefix joint_limited">
-    
     <!--base_link-->
     <link name="${prefix}base_link" >
       <visual>
@@ -122,7 +121,7 @@
         <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
       </xacro:cylinder_inertial>
     </link>
-
+    <!--shoulder_pan_joint-->
     <joint name="${prefix}shoulder_pan_joint" type="revolute">
       <parent link="${prefix}base_link" /> 
       <child link = "${prefix}shoulder_link" />
@@ -136,8 +135,7 @@
       </xacro:if>
       <dynamics damping="0.0" friction="0.0"/>
     </joint>
-
-
+    <!--shoulder_link-->
     <link name="${prefix}shoulder_link">
       <visual>
         <geometry>
@@ -158,7 +156,7 @@
         <inertia ixx="0.010267495893" ixy="0.0" ixz="0.0" iyy="0.010267495893" iyz="0.0" izz="0.00666"/>
       </inertial>
     </link>
-
+    <!--shoulder_lift_joint-->
     <joint name="${prefix}shoulder_lift_joint" type="revolute">
       <parent link="${prefix}shoulder_link" />
       <child link = "${prefix}upper_arm_link" />
@@ -173,7 +171,7 @@
       </xacro:if>
       <dynamics damping="0.0" friction="0.0"/>
     </joint>
-
+    <!--upper_arm_link-->
     <link name="${prefix}upper_arm_link">
       <visual>
         <geometry>
@@ -192,7 +190,7 @@
         <origin xyz="0.0 0.0 0.28" rpy="0 0 0" />
       </xacro:cylinder_inertial>
     </link>
-
+    <!--elbow_joint-->
     <joint name="${prefix}elbow_joint" type="revolute">
       <parent link="${prefix}upper_arm_link" />
       <child link = "${prefix}forearm_link" />
@@ -207,7 +205,7 @@
       </xacro:if>
       <dynamics damping="0.0" friction="0.0"/>
     </joint>
-
+    <!--forearm_link-->
     <link name="${prefix}forearm_link">
       <visual>
         <geometry>
@@ -226,7 +224,7 @@
         <origin xyz="0.0 0.0 0.25" rpy="0 0 0" />
       </xacro:cylinder_inertial>
     </link>
-
+    <!--wrist_1_joint-->
     <joint name="${prefix}wrist_1_joint" type="revolute">
       <parent link="${prefix}forearm_link"/>
       <child link="${prefix}wrist_1_link"/>
@@ -240,7 +238,7 @@
       </xacro:if>
       <dynamics damping="0.0" friction="0.0"/>
     </joint>
-
+    <!--wrist_1_link-->
     <link name="${prefix}wrist_1_link">
       <visual>
         <geometry>
@@ -259,7 +257,7 @@
         <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
       </xacro:cylinder_inertial>
     </link>
-
+    <!--wrist_2_joint-->
     <joint name="${prefix}wrist_2_joint" type="revolute">
       <parent link="${prefix}wrist_1_link" />
       <child link = "${prefix}wrist_2_link" />
@@ -273,7 +271,7 @@
       </xacro:if>
       <dynamics damping="0.0" friction="0.0"/>
     </joint>
-
+    <!--wrist_2_link-->
     <link name="${prefix}wrist_2_link">
       <visual>
         <geometry>
@@ -292,7 +290,7 @@
         <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
       </xacro:cylinder_inertial>
     </link>
-
+    <!--wrist_3_joint-->
     <joint name="${prefix}wrist_3_joint" type="revolute">
       <parent link="${prefix}wrist_2_link" />
       <child link = "${prefix}wrist_3_link" />
@@ -306,7 +304,7 @@
       </xacro:if>
       <dynamics damping="0.0" friction="0.0"/>
     </joint>
-
+    <!--wrist_3_link-->
     <link name="${prefix}wrist_3_link">
       <visual>
         <geometry>

@@ -1,14 +1,11 @@
 <?xml version="1.0"?>
 <robot name="ur3e_egh80" xmlns:xacro="http://www.ros.org/wiki/xacro">
-
+  <!--Here we attach gripper to the arm-->
   <xacro:include filename="$(find robot_description)/urdf/ur3e_joint_limited_robot.urdf.xacro" />
   <xacro:include filename="$(find robot_description)/urdf/schunk_egh80/schunk_egh80_gripper.urdf.xacro" />
-  
-  
-   <!-- Schunk EGH80 Coupler -->
+  <!-- Schunk EGH80 Coupler -->
     <!--  -->
     <!--  -->
-
   <link name="conector_tcp">
         <visual>
             <origin xyz="0 0 0" rpy="0 -0 0" />
@@ -43,6 +40,7 @@
       <mu1>0.9</mu1>
       <mu2>0.9</mu2>
   </gazebo>
+  <!--Attach gripper to connector-->
   <xacro:schunk_egh80_gripper prefix="" parent="conector_tcp">
       <origin xyz="0 0 0.001" rpy="0 ${-pi/2.0} ${pi}" />
   </xacro:schunk_egh80_gripper>
