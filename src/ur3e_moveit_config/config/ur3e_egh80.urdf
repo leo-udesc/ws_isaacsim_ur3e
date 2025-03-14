@@ -68,6 +68,7 @@
       <inertia ixx="0.0030531654454" ixy="0.0" ixz="0.0" iyy="0.0030531654454" iyz="0.0" izz="0.005625"/>
     </inertial>
   </link>
+  <!--shoulder_pan_joint-->
   <joint name="shoulder_pan_joint" type="revolute">
     <parent link="base_link"/>
     <child link="shoulder_link"/>
@@ -76,6 +77,7 @@
     <limit effort="56.0" lower="-3.141592653589793" upper="3.141592653589793" velocity="3.15"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
+  <!--shoulder_link-->
   <link name="shoulder_link">
     <visual>
       <geometry>
@@ -96,6 +98,7 @@
       <inertia ixx="0.010267495893" ixy="0.0" ixz="0.0" iyy="0.010267495893" iyz="0.0" izz="0.00666"/>
     </inertial>
   </link>
+  <!--shoulder_lift_joint-->
   <joint name="shoulder_lift_joint" type="revolute">
     <parent link="shoulder_link"/>
     <child link="upper_arm_link"/>
@@ -105,6 +108,7 @@
     <limit effort="56.0" lower="-3.141592653589793" upper="3.141592653589793" velocity="1.57079"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
+  <!--upper_arm_link-->
   <link name="upper_arm_link">
     <visual>
       <geometry>
@@ -125,6 +129,7 @@
       <inertia ixx="0.022165039346584883" ixy="0.0" ixz="0.0" iyy="0.022165039346584883" iyz="0.0" izz="0.00968765625"/>
     </inertial>
   </link>
+  <!--elbow_joint-->
   <joint name="elbow_joint" type="revolute">
     <parent link="upper_arm_link"/>
     <child link="forearm_link"/>
@@ -134,6 +139,7 @@
     <limit effort="28.0" lower="-3.141592653589793" upper="3.141592653589793" velocity="1.57079"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
+  <!--forearm_link-->
   <link name="forearm_link">
     <visual>
       <geometry>
@@ -154,6 +160,7 @@
       <inertia ixx="0.0074639235044294035" ixy="0.0" ixz="0.0" iyy="0.0074639235044294035" iyz="0.0" izz="0.0040415625"/>
     </inertial>
   </link>
+  <!--wrist_1_joint-->
   <joint name="wrist_1_joint" type="revolute">
     <parent link="forearm_link"/>
     <child link="wrist_1_link"/>
@@ -162,6 +169,7 @@
     <limit effort="12.0" lower="-3.141592653589793" upper="3.141592653589793" velocity="3.1415"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
+  <!--wrist_1_link-->
   <link name="wrist_1_link">
     <visual>
       <geometry>
@@ -182,6 +190,7 @@
       <inertia ixx="0.0022700428419824997" ixy="0.0" ixz="0.0" iyy="0.0022700428419824997" iyz="0.0" izz="0.0024496874999999996"/>
     </inertial>
   </link>
+  <!--wrist_2_joint-->
   <joint name="wrist_2_joint" type="revolute">
     <parent link="wrist_1_link"/>
     <child link="wrist_2_link"/>
@@ -190,6 +199,7 @@
     <limit effort="12.0" lower="-3.141592653589793" upper="3.141592653589793" velocity="3.1415"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
+  <!--wrist_2_link-->
   <link name="wrist_2_link">
     <visual>
       <geometry>
@@ -210,6 +220,7 @@
       <inertia ixx="0.0020980304107875002" ixy="0.0" ixz="0.0" iyy="0.0020980304107875002" iyz="0.0" izz="0.0022640625"/>
     </inertial>
   </link>
+  <!--wrist_3_joint-->
   <joint name="wrist_3_joint" type="revolute">
     <parent link="wrist_2_link"/>
     <child link="wrist_3_link"/>
@@ -218,6 +229,7 @@
     <limit effort="12.0" lower="-3.141592653589793" upper="3.141592653589793" velocity="3.1415"/>
     <dynamics damping="0.0" friction="0.0"/>
   </joint>
+  <!--wrist_3_link-->
   <link name="wrist_3_link">
     <visual>
       <geometry>
@@ -524,9 +536,7 @@
   <ros2_control name="FakeSystem" type="system">
     <hardware>
       <!-- By default, set up controllers for simulation. This won't work on real hardware -->
-      <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
-      <param name="joint_commands_topic">/isaac_joint_commands</param>
-      <param name="joint_state_topic">/isaac_joint_states</param>
+      <plugin>mock_components/GenericSystem</plugin>
     </hardware>
     <joint name="shoulder_pan_joint">
       <command_interface name="position"/>
